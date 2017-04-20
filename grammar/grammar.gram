@@ -1,0 +1,12 @@
+#JSGF V1.0;
+grammar hal;
+
+public <command> = (<time> | <quietmode> | <weather> | <schedule>);
+public <system> = (exit | yes | no);
+public <name> = (hal);
+
+<time> = (time);
+<quietmode> = (quiet mode);
+<date> = (date);
+<weather> = ((today | today's) | (tomorrow | tomorrow's)) (weather);
+<schedule> = ((today | today's) | (to111morrow | tomorrow's)) (schedule);
