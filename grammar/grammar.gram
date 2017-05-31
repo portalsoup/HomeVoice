@@ -9,4 +9,4 @@ public <name> = (hal);
 <quietmode> = (quiet mode);
 <date> = (date);
 <weather> = ((today | today's) | (tomorrow | tomorrow's)) (weather);
-<schedule> = ((today | today's) | (to111morrow | tomorrow's)) (schedule);
+<schedule> = ((today | today's) | (tomorrow | tomorrow's)) (schedule);

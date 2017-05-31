@@ -41,7 +41,6 @@ public class Main {
 
                 halResponse = entity.ask(recognizedString);
 
-
                 System.out.println("Hal says: " + halResponse);
                 synthesize(halResponse);
             }

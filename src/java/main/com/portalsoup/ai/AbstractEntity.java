@@ -31,8 +31,9 @@ public abstract class AbstractEntity {
      * How long should this entity be awake during inactivity?
      */
     private long wakeLength;
+
     /**
-     * Use to track the latest timer task.  If a new task is scheduled before a previous
+     * T    rack the latest timer task.  If a new task is scheduled before a previous
      * one finishes, then only the one which knows the matching taskId may execute.  Every
      * new task that is scheduled should update this field with a new value, and exclusively old it.
      */
@@ -54,7 +55,7 @@ public abstract class AbstractEntity {
      * @return
      */
     public String ask(String query) {
-        System.out.println("original query: " + query);
+        System.out.println("You asked: " + query);
         boolean originalWakeStatus = isAwake();
         // If my name is called, wake me
         if (query.equals(name)) {
@@ -115,16 +116,15 @@ public abstract class AbstractEntity {
     protected void wake() {
         System.out.println("Wake");
         awake = true;
-        UUID uuid = UUID.randomUUID();
+        final UUID uuid = UUID.randomUUID();
         this.taskId = uuid;
         wakeTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-                if (!taskId.equals(uuid)) {
-                    return;
+                if (taskId.equals(uuid)) {
+                    sleep();
                 }
-                awake = false;
-                System.out.println("Sleep");
+                return;
             }
         }, 5000);
     }

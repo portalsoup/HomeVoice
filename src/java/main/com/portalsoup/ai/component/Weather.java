@@ -1,22 +1,20 @@
 package com.portalsoup.ai.component;
 
 import com.portalsoup.ai.AbstractComponent;
+import com.portalsoup.ai.AbstractComponent.Command;
 
 import java.util.Optional;
+import java.util.function.Supplier;
 
 /**
  * Created by julian on 4/19/2017.
  */
+@Command("weather")
 public class Weather implements AbstractComponent {
-    @Override
-    public Optional<String> action(String query) {
-        if (query.contains("weather")) {
-            if (query.contains("today")) {
-                return Optional.of("It's probably raining");
-            } else if (query.contains("tomorrow")) {
-                return Optional.of("It's probably raining still");
-            }
-        }
-        return Optional.empty();
-    }
+
+    @Command("today")
+    protected Supplier<Optional<String>> today = Optional::empty;
+
+    @Command("tomorrow")
+    protected Supplier<Optional<String>> tomorrow = Optional::empty;
 }

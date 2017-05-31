@@ -6,6 +6,7 @@ import com.portalsoup.ai.component.Schedule;
 import com.portalsoup.ai.component.Time;
 import com.portalsoup.ai.component.Weather;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
 
 public class Hal extends AbstractEntity {
@@ -27,8 +28,7 @@ public class Hal extends AbstractEntity {
     }
 
     @Override
-    public String process(String query) {
-        String response = "";
+    protected String process(String query) {
         if (query.equals("quiet mode")) {
             quiet = !quiet;
             return "quiet mode " + (quiet ? "enabled" : "disabled");
@@ -39,12 +39,18 @@ public class Hal extends AbstractEntity {
         }
 
         for (AbstractComponent aBehavior : getBehaviors()) {
-            Optional<String> aResponse = aBehavior.action(query);
+            Optional<String> aResponse;
+            try {
+                aResponse = aBehavior.action(query);
+            } catch (InvocationTargetException | IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+
             if (aResponse.isPresent() && !aResponse.get().isEmpty()) {
                 return aResponse.get();
             }
         }
 
-        return response;
+        return "";
     }
 }
